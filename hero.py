@@ -70,6 +70,7 @@ def fight(self, opponent):
     opponent.take_damage(self.attack())
     self.take_damage(opponent.attack())
 
+    # Possible results during battle
     if self.is_alive() and not opponent.is_alive():
       print(f'{self.name} defeated {opponent.name}!')
     elif not self.is_alive() and opponent.is_alive():
