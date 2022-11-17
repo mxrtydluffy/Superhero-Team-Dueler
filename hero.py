@@ -1,6 +1,7 @@
 import random
 from ability import Ability
 from armor import Armor
+from weapon import Weapon
 
 
 class Hero:
@@ -19,7 +20,7 @@ class Hero:
     # always the same as their starting health (no damage taken yet!)
     self.current_health = starting_health
     # Need to add Abilities to our hero.
-    self.abilities = list ()
+    self.abilities = list()
     # Need to add Armors to our hero.
     self.armors = list()
 
@@ -46,15 +47,50 @@ def defend(self):
   total_block = 0
   for armor in self.armors:
     total_block += armor.block()
-    return total_block
+  return total_block
+
+def take_damage(self, damage):
+  protection = self.defend()
+  damage_impact = damage - protection
+  if damage_impact > 0:
+    self.current_health -= damage_impact
+
+def is_alive(self):
+  if self.current_health <= 0:
+    return False
+  else:
+    return True
+
+def fight(self, opponent):
+  if not self.abilities and not opponent.abilities:
+    print("Draw")
+    return
+
+  while self.is_alive() and opponent.is_alive():
+    opponent.take_damage(self.attack())
+    self.take_damage(opponent.attack())
+
+    if self.is_alive() and not opponent.is_alive():
+      print(f'{self.name} defeated {opponent.name}!')
+    elif not self.is_alive() and opponent.is_alive():
+      print(f'{opponent.name} defeated {self.name}!')
+    elif not self.is_alive() and not opponent.is_alive():
+      print(f'Both parties are dead!')
+
+
+def add_weapon(self, weapon):
+  self.abilities.append(weapon)
 
 if __name__ == "__main__":
-  hero1 = Hero("Wonder Woman")
-  hero2 = Hero("Dumbledore")
-  hero1.fight(hero2)
-  ability = Ability("Great Debugging", 50)
-  ability2 = Ability("Invisibility", 150)
-  hero = Hero("Dr. Strange", 200)
-  hero.add_ability(ability)
-  hero.add_ability(ability2)
-  print(hero.attack())
+  # hero1 = Hero("Wonder Woman")
+  # hero2 = Hero("Dumbledore")
+  # ability1 = Ability("Super Strength", 250)
+  # ability2 = Ability("Lasso of Truth", 320)
+  # ability3 = Ability("Avada Kedavra", 550)
+  # ability4 = Ability("Expelliarmus", 500)
+  # hero1.add_ability(ability1)
+  # hero1.add_ability(ability2)
+  # hero2.add_ability(ability3)
+  # hero2.add_abilit(ability4)
+  # hero1.fight(hero2)
+  # print(hero.attack())
