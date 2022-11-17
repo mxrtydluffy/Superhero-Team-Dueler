@@ -93,4 +93,11 @@ if __name__ == "__main__":
   # hero2.add_ability(ability3)
   # hero2.add_abilit(ability4)
   # hero1.fight(hero2)
-  # print(hero.attack())
+
+  eye_rays = Ability('Eye Rays', 50)
+  laser_blast = Weapon('Laser Blast', 50)
+  powers = [eye_rays, laser_blast]
+  for power in powers:
+    print(power.max_damage)
+  for power in powers:
+    print(power.attack())
