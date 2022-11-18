@@ -23,64 +23,81 @@ class Hero:
     self.abilities = list()
     # Need to add Armors to our hero.
     self.armors = list()
+    # Need to display deaths
+    self.deaths = 0
+    self.kills = 0
 
-def fight(self, opponent):
-  winner = random.randint(0,1)
-  if winner == 1:
-    print(f'{self.name} defeated {opponent.name}!')
-  else:
-      print(f'{opponent.name} defeated {self.name}!')
-
-def add_ability(self, ability):
-  self.abilities.append(ability)
-
-def attack(self):
-  total_damage = 0
-  for ability in self.abilites:
-    total_damage += ability.attack()
-  return total_damage
-
-def add_armor(self, armor):
-  self.armors.append(armor)
-
-def defend(self):
-  total_block = 0
-  for armor in self.armors:
-    total_block += armor.block()
-  return total_block
-
-def take_damage(self, damage):
-  protection = self.defend()
-  damage_impact = damage - protection
-  if damage_impact > 0:
-    self.current_health -= damage_impact
-
-def is_alive(self):
-  if self.current_health <= 0:
-    return False
-  else:
-    return True
-
-def fight(self, opponent):
-  if not self.abilities and not opponent.abilities:
-    print("Draw")
-    return
-
-  while self.is_alive() and opponent.is_alive():
-    opponent.take_damage(self.attack())
-    self.take_damage(opponent.attack())
-
-    # Possible results during battle
-    if self.is_alive() and not opponent.is_alive():
+  def fight(self, opponent):
+    winner = random.randint(0,1)
+    if winner == 1:
       print(f'{self.name} defeated {opponent.name}!')
-    elif not self.is_alive() and opponent.is_alive():
-      print(f'{opponent.name} defeated {self.name}!')
-    elif not self.is_alive() and not opponent.is_alive():
-      print(f'Both parties are dead!')
+    else:
+        print(f'{opponent.name} defeated {self.name}!')
+
+  def add_ability(self, ability):
+    self.abilities.append(ability)
+
+  def attack(self):
+    total_damage = 0
+    for ability in self.abilites:
+      total_damage += ability.attack()
+    return total_damage
+
+  def add_armor(self, armor):
+    self.armors.append(armor)
+
+  def defend(self):
+    total_block = 0
+    for armor in self.armors:
+      total_block += armor.block()
+    return total_block
+
+  def take_damage(self, damage):
+    protection = self.defend()
+    damage_impact = damage - protection
+    if damage_impact > 0:
+      self.current_health -= damage_impact
+
+  def is_alive(self):
+    if self.current_health <= 0:
+      return False
+    else:
+      return True
+
+  def fight(self, opponent):
+    if not self.abilities and not opponent.abilities:
+      print("Draw")
+      return
+
+    while self.is_alive() and opponent.is_alive():
+      opponent.take_damage(self.attack())
+      self.take_damage(opponent.attack())
+
+      # Possible results during battle
+      if self.is_alive() and not opponent.is_alive():
+        print(f'{self.name} defeated {opponent.name}!')
+        self.add_kill()
+        opponent.add_death()
+      elif not self.is_alive() and opponent.is_alive():
+        print(f'{opponent.name} defeated {self.name}!')
+        opponent.add_kill()
+        self.add_death()
+      elif not self.is_alive() and not opponent.is_alive():
+        print(f'Both parties are dead!')
+        self.add_kill()
+        self.add_death()
+        opponent.add_death()
+        opponent.add_kill()
 
 
-def add_weapon(self, weapon):
-  self.abilities.append(weapon)
+  def add_weapon(self, weapon):
+    self.abilities.append(weapon)
+
+  def add_kill(self, num_kills):
+    self.kills += num_kills
+
+  def add_death(self, num_deaths):
+    self.deaths += num_deaths
 
 if __name__ == "__main__":
   # hero1 = Hero("Wonder Woman")
